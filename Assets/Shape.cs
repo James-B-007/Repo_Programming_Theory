@@ -1,28 +1,50 @@
 using UnityEngine;
+using TMPro;
 
 public abstract class Shape : MonoBehaviour
 {
+    private TextMeshProUGUI displayText;
+
+    // ENCAPSULATION
     public abstract string shapeName {  get; }
-    public Mesh mesh;
+    public float volume;
 
     private void Start()
     {
-        mesh = GetComponent<Mesh>();
+        displayText = GameObject.Find("DisplayText").GetComponent<TextMeshProUGUI>();
+        CalculateMeasurements();
         CalculateVolume();
     }
 
-    public void DisplayShape()
+    public string GetShapeText()
     {
-        Debug.Log(shapeName);
+        return shapeName;
     }
 
-    public abstract void ShowMeasurements();
+    public abstract string ShowMeasurements();
 
     public abstract void CalculateVolume();
 
+    public abstract void CalculateMeasurements();
+
+    // ABSTRACTION
     private void OnMouseEnter()
     {
-        DisplayShape();
-        ShowMeasurements();
+        DisplayDetails();
+    }
+
+    private void OnMouseExit()
+    {
+        displayText.text = "";
+    }
+
+    private void DisplayDetails()
+    {
+        string details = "";
+        details += GetShapeText();
+        details += "\n";
+        details += ShowMeasurements();
+        details += $"Volume = {volume}m^3";
+        displayText.text = details;
     }
 }

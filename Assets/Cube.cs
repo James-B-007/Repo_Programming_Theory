@@ -10,18 +10,20 @@ public class Cube : Shape
 
     public override string shapeName => "Cube";
 
+    public override void CalculateMeasurements()
+    {
+        width = transform.localScale.x;
+        length = transform.localScale.z;
+        height = transform.localScale.y;
+    }
+
     public override void CalculateVolume()
     {
-        mesh
+        volume = length * width * height;
     }
 
-    public override void ShowMeasurements()
+    public override string ShowMeasurements()
     {
-        Debug.Log("Measurements:");
-        Debug.Log($"Length: {length}");
-        Debug.Log($"Width: {width}");
-        Debug.Log($"Height: {height}");
+        return $"Measurements:\nLength: {length}\nWidth: {width}\nHeight: {height}\n";
     }
-
-    
 }
